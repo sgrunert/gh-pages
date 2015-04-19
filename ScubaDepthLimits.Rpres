@@ -1,0 +1,70 @@
+Illustration: Nitrox vs Air Depth Limits in Scuba Diving
+========================================================
+author: Steve Grunert
+date:   April 18, 2015
+transition: fade
+
+Background
+========================================================
+
+<small>When a Scuba diver breathes compressed gas underwater, they enter an envelope bounded by multiple established safety limits. One such limit is the not-to-exceed depth of 130 feet for recreational divers when breathing regular air. Exceeding 130 feet runs an unacceptable risk of decompression sickness from nitrogen and/or nitrogen narcosis. 
+
+To lengthen their allowed dive times, some divers increase the percent of oxygen they breathe while underwater, which reduces the percent of nitrogen, decreasing nitrogen's harmful effects. These adjusted gas mixtures are known as Nitrox (N2/O2). Unfortunately, oxygen too becomes harmful at higher partial pressures when in deeper water. This means Nitrox divers must also limit their depths to avoid oxygen toxicity from the supplemental oxygen added to their tank mixtures.</small>
+
+
+Shiny App: Nitrox vs Air Depth Limits
+========================================================
+
+<small>The Shiny App at http://sgrunert.shinyapps.io/Shiny illustrates the relationship between the primary 130 ft depth limit set for decompression sickness and the calculated Nitrox depth limit set for oxygen toxicity. 
+
+Use the slider input to select a Nitrox oxygen level. 0.21 (21% O2) is the base atmospheric level and 0.40 (40% O2) is the maximum allowed level. Move the slider to the right to see when oxygen toxicity becomes the limiting factor on the allowed depth.
+
+- Not-to-Exceed Depth Limit: 130 feet.
+- Nitrox-based Depth Limit:
+      - Maximum Depth = (46.2 ft/O2 Level) - 33 ft
+- Oxygen Range: 0.21 - 0.40 (21%-40%)</small>
+
+
+Plot of Nitrox vs Air Depth Limits
+========================================================
+
+```{r, echo=FALSE, fig.align = "center", fig.height = 8.5,fig.height, fig.width= 11}
+
+    Oxygen <- c(21:40)/100  
+    Depth <-  (46.2/Oxygen - 33)
+    plot(Oxygen,Depth,type = "l"
+         ,lwd=2
+         ,col="orange"
+         ,xlab='Oxygen Level in Nitrox Mix (N2/O2)'
+         ,ylab='Depth Limit in Feet'
+         ,main='Nitrox vs Air Depth Limits'
+         ,xaxt="n"
+         ,cex = 1.5)
+    axis(1, at = seq(.20,.40, by = .02))
+    lines(c(.21, .40), c(130, 130),col="red",lwd=2)
+    text(.375, 105, paste("Nitrox O2-Based Depth Limit"),cex = 1.2,col="orange")
+    text(.35, 137, paste("130 ft Air N2-Based Depth Limit"),cex = 1.2,col="red")
+    text(.265, 105, paste("Protocol is to Stay Shallower Than Both Curves"),cex = 1.5,col="darkgreen")
+    text(.305, 181, paste("Oxygen Level: 0.305"),cex = 1.5)
+    text(.305, 174, paste("Max Allowed Depth: 119"),cex = 1.5)
+    ##lines(c(.31, .31), c(0, 170),col="darkgreen",lwd=2)
+
+```
+
+
+Closing Points
+========================================================
+
+<small>In the prior plot, you can see oxygen becomes depth limiting just above 28%. Divers may switch between Nitrox and air in a tank. Thinking they have a tank of air, there can be confusion if the next dive is a deep one. For example, an unwary diver uses a 40% Nitrox tank for dive #1, leaves it half full, and refills with air (21%) for dive #2. The math is as follows:
+
+```{r}
+(1/2*.40)+(1/2*.21)
+```
+
+<small>At 30.5% oxygen, the depth limit is as follows:</small>
+
+```{r}
+46.2/.305 - 33
+```
+
+<small>119 feet is the actual limit, rather than a mistaken 130 feet for regular air.</small></small>
